@@ -1,0 +1,34 @@
+package com.victorvgc.fullhouser.core.di
+
+import com.victorvgc.fullhouser.flowOne.service.DeckService
+import okhttp3.OkHttpClient
+import org.koin.dsl.module
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
+
+private const val CONNECT_TIMEOUT = 10L
+private const val WRITE_TIMEOUT = 1L
+private const val READ_TIMEOUT = 20L
+private const val BASE_URL = "https://deckofcardsapi.com/api/deck/"
+
+val coreNetworkModule = module {
+    single {
+        OkHttpClient.Builder().apply {
+            connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
+            writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
+            readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
+            retryOnConnectionFailure(true)
+        }.build()
+    }
+
+    single {
+        Retrofit.Builder()
+            .client(get<OkHttpClient>())
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    single { get<Retrofit>().create(DeckService::class.java) }
+}
