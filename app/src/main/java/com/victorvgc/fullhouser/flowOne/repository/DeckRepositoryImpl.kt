@@ -13,15 +13,22 @@ import com.victorvgc.fullhouser.flowOne.model.Success
 class DeckRepositoryImpl(
     private val remoteDeckDataSource: RemoteDeckDataSource,
     private val localDeckDataSource: LocalDeckDataSource
-): DeckRepository {
+) : DeckRepository {
     override suspend fun saveDeck(deck: Deck?): Either<Failure, Success> {
-        val response = remoteDeckDataSource.saveDeck(deck!!)
+        val resDeck = remoteDeckDataSource.saveDeck(deck!!)
 
-        return response.fold(
+        return resDeck.fold(
             { Left(SomethingWentWrongFailure()) },
             { remoteDeck ->
-                localDeckDataSource.saveDeck(remoteDeck)
-                Right(Success())
+                val resPile = remoteDeckDataSource.savePile(remoteDeck)
+
+                resPile.fold(
+                    { Left(SomethingWentWrongFailure()) },
+                    { remotePile ->
+                        localDeckDataSource.saveDeck(remotePile)
+                        Right(Success())
+                    }
+                )
             }
         )
     }

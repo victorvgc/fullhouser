@@ -7,6 +7,7 @@ import com.victorvgc.fullhouser.CoroutineRule
 import com.victorvgc.fullhouser.core.model.Card
 import com.victorvgc.fullhouser.core.model.Deck
 import com.victorvgc.fullhouser.core.model.Response
+import com.victorvgc.fullhouser.core.utils.toParamString
 import com.victorvgc.fullhouser.flowOne.failure.APIFailure
 import com.victorvgc.fullhouser.flowOne.service.DeckService
 import junit.framework.Assert.assertEquals
@@ -51,10 +52,18 @@ class RemoteDeckDataSourceImplTest {
         `when`(mockDeckService.saveDeck(anyString())).thenAnswer {
             testResponse
         }
+
+        `when`(mockDeckService.createDeckPile(anyString(), anyString())).thenAnswer {
+            testResponse
+        }
     }
 
     private suspend fun setupFailureRequest() {
         `when`(mockDeckService.saveDeck(anyString())).thenAnswer {
+            testFailureResponse
+        }
+
+        `when`(mockDeckService.createDeckPile(anyString(), anyString())).thenAnswer {
             testFailureResponse
         }
     }
@@ -101,6 +110,53 @@ class RemoteDeckDataSourceImplTest {
 
             // act
             val result = sut.saveDeck(testDeck)
+
+            // assert
+            val expected = Left(APIFailure())
+            assertEquals(expected, result)
+        }
+    }
+
+    @Test
+    fun `when savePile called send cards in deck as a pile`() {
+        testCoroutineRule.runBlockingTest {
+            // arrange
+            setupSuccessfulRequest()
+
+            // act
+            sut.savePile(testDeck)
+
+            // assert
+            verify(mockDeckService, times(1)).createDeckPile(
+                testDeck.toString(),
+                testDeck.cards.toParamString()
+            )
+        }
+    }
+
+    @Test
+    fun `when savePile called success return a deck with deckId from Response Right Side`() {
+        testCoroutineRule.runBlockingTest {
+            // arrange
+            setupSuccessfulRequest()
+
+            // act
+            val result = sut.savePile(testDeck)
+
+            // assert
+            val expected = Right(testDeck)
+            assertEquals(expected, result)
+        }
+    }
+
+    @Test
+    fun `when savePile called and receives an API failure return APIFailure`() {
+        testCoroutineRule.runBlockingTest {
+            // arrange
+            setupFailureRequest()
+
+            // act
+            val result = sut.savePile(testDeck)
 
             // assert
             val expected = Left(APIFailure())

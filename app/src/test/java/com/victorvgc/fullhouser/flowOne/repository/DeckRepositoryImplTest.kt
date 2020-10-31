@@ -45,7 +45,19 @@ class DeckRepositoryImplTest {
         Card("C", "A"),
         Card("D", "A")
     )
-    private val testDeck = Deck("testDeckId", testCardsList, testRotCard)
+    private val testStartDeck = Deck("testDeckId", testCardsList, testRotCard)
+    private val testFinalDeck = Deck(testDeckId, testCardsList, testRotCard)
+
+    // USEFUL METHODS
+    private suspend fun setupSuccessfulDataSource() {
+        `when`(mockRemoteDeckDataSource.saveDeck(any(Deck::class.java))).thenAnswer {
+            Right(testFinalDeck)
+        }
+
+        `when`(mockRemoteDeckDataSource.savePile(any(Deck::class.java))).thenAnswer {
+            Right(testFinalDeck)
+        }
+    }
 
     @Before
     fun setup() {
@@ -56,15 +68,14 @@ class DeckRepositoryImplTest {
     fun `when saveDeck called success return successful Result`() {
         testCoroutineRule.runBlockingTest {
             // arrange
-            `when`(mockRemoteDeckDataSource.saveDeck(testDeck)).thenAnswer {
-                Right(Deck(testDeckId, testCardsList, testRotCard))
-            }
+            setupSuccessfulDataSource()
+
             // act
-            val result = sut.saveDeck(testDeck)
+            val result = sut.saveDeck(testStartDeck)
 
             // assert
             val expectedFromRemote = Deck(testDeckId, testCardsList, testRotCard)
-            verify(mockRemoteDeckDataSource, times(1)).saveDeck(testDeck)
+            verify(mockRemoteDeckDataSource, times(1)).saveDeck(testStartDeck)
             verify(mockLocalDeckDataSource, times(1)).saveDeck(expectedFromRemote)
 
             val expected = Right(Success())
@@ -74,20 +85,56 @@ class DeckRepositoryImplTest {
     }
 
     @Test
-    fun `when saveDeck called fails return SomethingWentWrongFailure`() {
+    fun `when saveDeck called fails data source saveDeck return SomethingWentWrongFailure`() {
         testCoroutineRule.runBlockingTest {
             // arrange
-            `when`(mockRemoteDeckDataSource.saveDeck(testDeck)).thenAnswer {
+            `when`(mockRemoteDeckDataSource.saveDeck(any(Deck::class.java))).thenAnswer {
                 Left(Failure("Any failure"))
             }
 
             // act
-            val result = sut.saveDeck(testDeck)
+            val result = sut.saveDeck(testStartDeck)
 
             // arrange
             val expected = Left(SomethingWentWrongFailure())
 
             assertEquals(expected, result)
+        }
+    }
+
+    @Test
+    fun `when saveDeck called fails data source savePile return SomethingWentWrongFailure`() {
+        testCoroutineRule.runBlockingTest {
+            // arrange
+            `when`(mockRemoteDeckDataSource.saveDeck(any(Deck::class.java))).thenAnswer {
+                Right(testFinalDeck)
+            }
+
+            `when`(mockRemoteDeckDataSource.savePile(any(Deck::class.java))).thenAnswer {
+                Left(Failure("Any failure"))
+            }
+
+            // act
+            val result = sut.saveDeck(testStartDeck)
+
+            // arrange
+            val expected = Left(SomethingWentWrongFailure())
+
+            assertEquals(expected, result)
+        }
+    }
+
+    @Test
+    fun `when saveDeck called save pile after successful response of data source saveDeck`() {
+        testCoroutineRule.runBlockingTest {
+            // arrange
+            setupSuccessfulDataSource()
+
+            // act
+            sut.saveDeck(testFinalDeck)
+
+            // assert
+            verify(mockRemoteDeckDataSource, times(1)).savePile(testFinalDeck)
         }
     }
 }
