@@ -7,6 +7,7 @@ buildscript {
     ext.okhttp = "4.4.1"
     ext.arrow_version = "0.10.5"
     ext.koin = "2.0.1"
+    ext.glide = "4.11.0"
 
     ext.junit_version="4.13.1"
     ext.junit_x_ext = "1.1.2"

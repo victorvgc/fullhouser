@@ -1,5 +1,6 @@
 package com.victorvgc.fullhouser.core.di
 
+import com.victorvgc.fullhouser.core.constants.NetworkConstants.Companion.BASE_URL
 import com.victorvgc.fullhouser.flowOne.service.DeckService
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
@@ -10,7 +11,6 @@ import java.util.concurrent.TimeUnit
 private const val CONNECT_TIMEOUT = 10L
 private const val WRITE_TIMEOUT = 1L
 private const val READ_TIMEOUT = 20L
-private const val BASE_URL = "https://deckofcardsapi.com/api/deck/"
 
 val coreNetworkModule = module {
     single {
@@ -29,6 +29,4 @@ val coreNetworkModule = module {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
-
-    single { get<Retrofit>().create(DeckService::class.java) }
 }

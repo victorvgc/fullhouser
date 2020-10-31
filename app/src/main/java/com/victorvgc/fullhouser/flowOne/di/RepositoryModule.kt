@@ -5,5 +5,5 @@ import com.victorvgc.fullhouser.flowOne.repository.DeckRepositoryImpl
 import org.koin.dsl.module
 
 val flowOneRepositoryModule = module {
-    single<DeckRepository> { DeckRepositoryImpl(get(), get())}
+    single<DeckRepository> { DeckRepositoryImpl(get(), get()) }
 }

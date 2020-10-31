@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.victorvgc.fullhouser.flowOne.FlowOneViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_error"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/FormErrorMsg"
+            bind:error="@{viewModel.form.formMsg}"
+            app:layout_constraintBottom_toTopOf="@+id/btn_submit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/et_rot_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:drawableStart="@drawable/ic_baseline_star_24"
+            android:ems="8"
+            android:text="@={viewModel.form.cardFields.rotCard}"
+            bind:onFocus="@{viewModel.onFocusChangedListener}"
+            android:hint="@string/rot_card_hint"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/btn_submit"
+            style="@style/AccentButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.onSubmit()}"
+            android:enabled="@{viewModel.form.isValid()}"
+            android:text="@string/submit_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/tv_error"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_rot_card">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp">
+
+                <EditText
+                    android:id="@+id/et_card_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="6"
+                    android:hint="@string/card_hint"
+                    bind:onFocus="@{viewModel.onFocusChangedListener}"
+                    android:importantForAutofill="no"
+                    android:inputType="textPersonName"
+                    android:text="@={viewModel.form.cardFields.card0}" />
+
+                <EditText
+                    android:id="@+id/et_card_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="6"
+                    android:hint="@string/card_hint"
+                    bind:onFocus="@{viewModel.onFocusChangedListener}"
+                    android:importantForAutofill="no"
+                    android:inputType="textPersonName"
+                    android:text="@={viewModel.form.cardFields.card1}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp">
+
+                <EditText
+                    android:id="@+id/et_card_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="6"
+                    android:hint="@string/card_hint"
+                    android:importantForAutofill="no"
+                    android:inputType="textPersonName"
+                    android:text="@={viewModel.form.cardFields.card2}" />
+
+                <EditText
+                    android:id="@+id/et_card_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="6"
+                    android:hint="@string/card_hint"
+                    android:importantForAutofill="no"
+                    android:inputType="textPersonName"
+                    android:text="@={viewModel.form.cardFields.card3}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp">
+
+                <EditText
+                    android:id="@+id/et_card_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="6"
+                    android:hint="@string/card_hint"
+                    android:importantForAutofill="no"
+                    android:inputType="textPersonName"
+                    android:text="@={viewModel.form.cardFields.card4}" />
+
+                <EditText
+                    android:id="@+id/et_card_6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="6"
+                    android:hint="@string/card_hint"
+                    android:importantForAutofill="no"
+                    android:inputType="textPersonName"
+                    android:text="@={viewModel.form.cardFields.card5}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp">
+
+                <EditText
+                    android:id="@+id/et_card_7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="6"
+                    android:hint="@string/card_hint"
+                    android:importantForAutofill="no"
+                    android:inputType="textPersonName"
+                    android:text="@={viewModel.form.cardFields.card6}" />
+
+                <EditText
+                    android:id="@+id/et_card_8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="6"
+                    android:hint="@string/card_hint"
+                    android:importantForAutofill="no"
+                    android:inputType="textPersonName"
+                    android:text="@={viewModel.form.cardFields.card7}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp">
+
+                <EditText
+                    android:id="@+id/et_card_9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="6"
+                    android:hint="@string/card_hint"
+                    android:importantForAutofill="no"
+                    android:inputType="textPersonName"
+                    android:text="@={viewModel.form.cardFields.card8}" />
+
+                <EditText
+                    android:id="@+id/et_card_10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="6"
+                    android:hint="@string/card_hint"
+                    android:importantForAutofill="no"
+                    android:inputType="textPersonName"
+                    android:text="@={viewModel.form.cardFields.card9}" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
