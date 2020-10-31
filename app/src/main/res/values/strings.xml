@@ -9,4 +9,7 @@
     <string name="error_unique_card_set">Cards must be unique!</string>
     <string name="error_cards_not_valid">Some cards are not valid!</string>
     <string name="error_rot_card_empty">Missing rotation card!</string>
+
+    <string name="error_something_went_wrong">Ops! Something went wrong :(</string>
+    <string name="error_something_went_really_wrong">Sorry, this never happened before T.T</string>
 </resources>

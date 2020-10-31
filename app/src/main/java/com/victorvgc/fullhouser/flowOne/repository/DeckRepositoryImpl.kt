@@ -14,12 +14,12 @@ class DeckRepositoryImpl(
     private val remoteDeckDataSource: RemoteDeckDataSource,
     private val localDeckDataSource: LocalDeckDataSource
 ): DeckRepository {
-    override suspend fun saveDeck(deck: Deck): Either<Failure, Success> {
-        val response = remoteDeckDataSource.saveDeck(deck)
+    override suspend fun saveDeck(deck: Deck?): Either<Failure, Success> {
+        val response = remoteDeckDataSource.saveDeck(deck!!)
 
         return response.fold(
-            {Left(SomethingWentWrongFailure()) },
-            {remoteDeck ->
+            { Left(SomethingWentWrongFailure()) },
+            { remoteDeck ->
                 localDeckDataSource.saveDeck(remoteDeck)
                 Right(Success())
             }

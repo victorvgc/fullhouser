@@ -1,6 +1,5 @@
 package com.victorvgc.fullhouser.flowOne.model
 
-import androidx.annotation.VisibleForTesting
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.lifecycle.LiveData
@@ -10,13 +9,14 @@ import com.victorvgc.fullhouser.R
 import java.util.*
 
 class Form : BaseObservable() {
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     val cardFields = CardFields()
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     var error = 0
 
     private val buttonCLick = MutableLiveData<CardFields>()
+
+    val cards = mutableListOf<String>()
+    var rotCard = ""
 
     @Bindable
     fun isValid(): Boolean {
@@ -43,6 +43,9 @@ class Form : BaseObservable() {
             return false
         }
 
+        cards.clear()
+        cards.addAll(cardList)
+
         if (cardFields.rotCard.isEmpty()) {
             error = R.string.error_rot_card_empty
 
@@ -53,6 +56,7 @@ class Form : BaseObservable() {
         }
 
         cardList.add(cardFields.rotCard)
+        rotCard = cardFields.rotCard
 
         var isCardsValid = true
 

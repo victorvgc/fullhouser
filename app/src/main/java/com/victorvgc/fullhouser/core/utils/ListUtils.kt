@@ -6,7 +6,7 @@ fun List<Card>.toParamString(): String {
     var string = ""
 
     for (card in this) {
-        string += card.toString()
+        string += "$card,"
     }
 
     return string

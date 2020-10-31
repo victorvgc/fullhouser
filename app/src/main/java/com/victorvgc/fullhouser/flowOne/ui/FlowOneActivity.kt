@@ -1,10 +1,14 @@
 package com.victorvgc.fullhouser.flowOne.ui
 
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import com.victorvgc.fullhouser.R
 import com.victorvgc.fullhouser.core.BaseActivity
 import com.victorvgc.fullhouser.databinding.ActivityFlowOneBinding
 import com.victorvgc.fullhouser.flowOne.FlowOneViewModel
+import com.victorvgc.fullhouser.flowOne.model.Loading
+import com.victorvgc.fullhouser.flowOne.model.Success
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class FlowOneActivity : BaseActivity() {
@@ -19,6 +23,39 @@ class FlowOneActivity : BaseActivity() {
             lifecycleOwner = this@FlowOneActivity
 
             viewModel = this@FlowOneActivity.viewModel
+        }
+
+        viewModel.getState().observe(this) {
+            binding.pbSubmit.visibility = View.GONE
+            when (it) {
+                is Loading -> {
+                    binding.pbSubmit.visibility = View.VISIBLE
+                }
+                is Success -> {
+                    /*Intent().let {
+                        startActivity(it)
+                    }*/
+                    Toast.makeText(
+                        this,
+                        "TODO: Call Flow 2",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                is Error -> {
+                    Toast.makeText(
+                        this,
+                        resources.getString(R.string.error_something_went_wrong),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                else -> {
+                    Toast.makeText(
+                        this,
+                        resources.getString(R.string.error_something_went_really_wrong),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
         }
     }
 }

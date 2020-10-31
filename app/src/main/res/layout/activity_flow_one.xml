@@ -8,6 +8,10 @@
         <variable
             name="viewModel"
             type="com.victorvgc.fullhouser.flowOne.FlowOneViewModel" />
+
+        <import type="com.victorvgc.fullhouser.flowOne.model.Loading" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,13 +20,13 @@
 
         <TextView
             android:id="@+id/tv_error"
+            style="@style/FormErrorMsg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            style="@style/FormErrorMsg"
-            bind:error="@{viewModel.form.formMsg}"
             app:layout_constraintBottom_toTopOf="@+id/btn_submit"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            bind:error="@{viewModel.form.formMsg}" />
 
         <EditText
             android:id="@+id/et_rot_card"
@@ -31,29 +35,31 @@
             android:layout_marginTop="16dp"
             android:drawableStart="@drawable/ic_baseline_star_24"
             android:ems="8"
-            android:text="@={viewModel.form.cardFields.rotCard}"
-            bind:onFocus="@{viewModel.onFocusChangedListener}"
             android:hint="@string/rot_card_hint"
             android:importantForAutofill="no"
             android:inputType="textPersonName"
+            android:text="@={viewModel.form.cardFields.rotCard}"
+            android:textAllCaps="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            bind:onFocus="@{viewModel.onFocusChangedListener}" />
 
         <TextView
             android:id="@+id/btn_submit"
             style="@style/AccentButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:enabled="@{viewModel.form.valid}"
             android:onClick="@{() -> viewModel.onSubmit()}"
-            android:enabled="@{viewModel.form.isValid()}"
             android:text="@string/submit_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
@@ -80,10 +86,11 @@
                     android:layout_height="wrap_content"
                     android:ems="6"
                     android:hint="@string/card_hint"
-                    bind:onFocus="@{viewModel.onFocusChangedListener}"
                     android:importantForAutofill="no"
                     android:inputType="textPersonName"
-                    android:text="@={viewModel.form.cardFields.card0}" />
+                    android:text="@={viewModel.form.cardFields.card0}"
+                    android:textAllCaps="true"
+                    bind:onFocus="@{viewModel.onFocusChangedListener}" />
 
                 <EditText
                     android:id="@+id/et_card_2"
@@ -91,10 +98,11 @@
                     android:layout_height="wrap_content"
                     android:ems="6"
                     android:hint="@string/card_hint"
-                    bind:onFocus="@{viewModel.onFocusChangedListener}"
                     android:importantForAutofill="no"
                     android:inputType="textPersonName"
-                    android:text="@={viewModel.form.cardFields.card1}" />
+                    android:text="@={viewModel.form.cardFields.card1}"
+                    android:textAllCaps="true"
+                    bind:onFocus="@{viewModel.onFocusChangedListener}" />
             </LinearLayout>
 
             <LinearLayout
@@ -112,7 +120,8 @@
                     android:hint="@string/card_hint"
                     android:importantForAutofill="no"
                     android:inputType="textPersonName"
-                    android:text="@={viewModel.form.cardFields.card2}" />
+                    android:text="@={viewModel.form.cardFields.card2}"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/et_card_4"
@@ -122,7 +131,8 @@
                     android:hint="@string/card_hint"
                     android:importantForAutofill="no"
                     android:inputType="textPersonName"
-                    android:text="@={viewModel.form.cardFields.card3}" />
+                    android:text="@={viewModel.form.cardFields.card3}"
+                    android:textAllCaps="true" />
             </LinearLayout>
 
             <LinearLayout
@@ -140,7 +150,8 @@
                     android:hint="@string/card_hint"
                     android:importantForAutofill="no"
                     android:inputType="textPersonName"
-                    android:text="@={viewModel.form.cardFields.card4}" />
+                    android:text="@={viewModel.form.cardFields.card4}"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/et_card_6"
@@ -150,7 +161,8 @@
                     android:hint="@string/card_hint"
                     android:importantForAutofill="no"
                     android:inputType="textPersonName"
-                    android:text="@={viewModel.form.cardFields.card5}" />
+                    android:text="@={viewModel.form.cardFields.card5}"
+                    android:textAllCaps="true" />
             </LinearLayout>
 
             <LinearLayout
@@ -168,7 +180,8 @@
                     android:hint="@string/card_hint"
                     android:importantForAutofill="no"
                     android:inputType="textPersonName"
-                    android:text="@={viewModel.form.cardFields.card6}" />
+                    android:text="@={viewModel.form.cardFields.card6}"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/et_card_8"
@@ -178,7 +191,8 @@
                     android:hint="@string/card_hint"
                     android:importantForAutofill="no"
                     android:inputType="textPersonName"
-                    android:text="@={viewModel.form.cardFields.card7}" />
+                    android:text="@={viewModel.form.cardFields.card7}"
+                    android:textAllCaps="true" />
             </LinearLayout>
 
             <LinearLayout
@@ -196,7 +210,8 @@
                     android:hint="@string/card_hint"
                     android:importantForAutofill="no"
                     android:inputType="textPersonName"
-                    android:text="@={viewModel.form.cardFields.card8}" />
+                    android:text="@={viewModel.form.cardFields.card8}"
+                    android:textAllCaps="true" />
 
                 <EditText
                     android:id="@+id/et_card_10"
@@ -206,9 +221,21 @@
                     android:hint="@string/card_hint"
                     android:importantForAutofill="no"
                     android:inputType="textPersonName"
-                    android:text="@={viewModel.form.cardFields.card9}" />
+                    android:text="@={viewModel.form.cardFields.card9}"
+                    android:textAllCaps="true" />
             </LinearLayout>
         </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/pb_submit"
+            style="@style/ProgressBarSubmit"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btn_submit" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

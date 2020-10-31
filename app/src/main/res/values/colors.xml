@@ -11,4 +11,5 @@
 
     <color name="black_A55">#55000000</color>
     <color name="red_900">#FFB71C1C</color>
+    <color name="gray_500">#FF9E9E9E</color>
 </resources>

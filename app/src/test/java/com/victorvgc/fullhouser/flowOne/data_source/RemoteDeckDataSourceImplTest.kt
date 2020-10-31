@@ -7,7 +7,6 @@ import com.victorvgc.fullhouser.CoroutineRule
 import com.victorvgc.fullhouser.core.model.Card
 import com.victorvgc.fullhouser.core.model.Deck
 import com.victorvgc.fullhouser.core.model.Response
-import com.victorvgc.fullhouser.core.utils.toParamString
 import com.victorvgc.fullhouser.flowOne.failure.APIFailure
 import com.victorvgc.fullhouser.flowOne.service.DeckService
 import junit.framework.Assert.assertEquals
@@ -66,7 +65,7 @@ class RemoteDeckDataSourceImplTest {
     }
 
     @Test
-    fun `when saveDeck called put cards list as string param`() {
+    fun `when saveDeck called send deck as String`() {
         testCoroutineRule.runBlockingTest {
             // arrange
             setupSuccessfulRequest()
@@ -75,7 +74,7 @@ class RemoteDeckDataSourceImplTest {
             sut.saveDeck(testDeck)
 
             // assert
-            verify(mockDeckService, times(1)).saveDeck(testCardsList.toParamString())
+            verify(mockDeckService, times(1)).saveDeck(testDeck.toString())
         }
     }
 
