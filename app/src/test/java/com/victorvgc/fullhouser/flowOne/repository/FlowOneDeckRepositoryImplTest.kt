@@ -7,8 +7,8 @@ import com.victorvgc.fullhouser.CoroutineRule
 import com.victorvgc.fullhouser.core.model.Card
 import com.victorvgc.fullhouser.core.model.Deck
 import com.victorvgc.fullhouser.core.utils.Failure
-import com.victorvgc.fullhouser.flowOne.data_source.LocalDeckDataSource
-import com.victorvgc.fullhouser.flowOne.data_source.RemoteDeckDataSource
+import com.victorvgc.fullhouser.flowOne.data_source.FlowOneLocalDeckDataSource
+import com.victorvgc.fullhouser.flowOne.data_source.FlowOneRemoteDeckDataSource
 import com.victorvgc.fullhouser.flowOne.failure.SomethingWentWrongFailure
 import com.victorvgc.fullhouser.flowOne.model.Success
 import junit.framework.Assert.assertEquals
@@ -22,7 +22,7 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class DeckRepositoryImplTest {
+class FlowOneDeckRepositoryImplTest {
     @get:Rule
     val testInstantTaskExecutorRule = InstantTaskExecutorRule()
 
@@ -30,11 +30,11 @@ class DeckRepositoryImplTest {
     val testCoroutineRule = CoroutineRule()
 
     // SUT
-    private lateinit var sut: DeckRepositoryImpl
+    private lateinit var sut: FlowOneDeckRepositoryImpl
 
     // MOCKS
-    private val mockLocalDeckDataSource = mock(LocalDeckDataSource::class.java)
-    private val mockRemoteDeckDataSource = mock(RemoteDeckDataSource::class.java)
+    private val mockLocalDeckDataSource = mock(FlowOneLocalDeckDataSource::class.java)
+    private val mockRemoteDeckDataSource = mock(FlowOneRemoteDeckDataSource::class.java)
 
     // USEFUL VARIABLES
     private val testDeckId = "deckID00001"
@@ -57,11 +57,15 @@ class DeckRepositoryImplTest {
         `when`(mockRemoteDeckDataSource.savePile(any(Deck::class.java))).thenAnswer {
             Right(testFinalDeck)
         }
+
+        `when`(mockRemoteDeckDataSource.saveRotCard(any(Deck::class.java))).thenAnswer {
+            Right(testFinalDeck)
+        }
     }
 
     @Before
     fun setup() {
-        sut = DeckRepositoryImpl(mockRemoteDeckDataSource, mockLocalDeckDataSource)
+        sut = FlowOneDeckRepositoryImpl(mockRemoteDeckDataSource, mockLocalDeckDataSource)
     }
 
     @Test
@@ -135,6 +139,46 @@ class DeckRepositoryImplTest {
 
             // assert
             verify(mockRemoteDeckDataSource, times(1)).savePile(testFinalDeck)
+        }
+    }
+
+    @Test
+    fun `when saveDeck called save rotation card after successful response of data source saveDeck`() {
+        testCoroutineRule.runBlockingTest {
+            // arrange
+            setupSuccessfulDataSource()
+
+            // act
+            sut.saveDeck(testFinalDeck)
+
+            // assert
+            verify(mockRemoteDeckDataSource, times(1)).saveRotCard(testFinalDeck)
+        }
+    }
+
+    @Test
+    fun `when saveDeck called fails data source saveRotCard return SomethingWentWrongFailure`() {
+        testCoroutineRule.runBlockingTest {
+            // arrange
+            `when`(mockRemoteDeckDataSource.saveDeck(any(Deck::class.java))).thenAnswer {
+                Right(testFinalDeck)
+            }
+
+            `when`(mockRemoteDeckDataSource.savePile(any(Deck::class.java))).thenAnswer {
+                Right(testFinalDeck)
+            }
+
+            `when`(mockRemoteDeckDataSource.saveRotCard(any(Deck::class.java))).thenAnswer {
+                Left(Failure("Any failure"))
+            }
+
+            // act
+            val result = sut.saveDeck(testStartDeck)
+
+            // arrange
+            val expected = Left(SomethingWentWrongFailure())
+
+            assertEquals(expected, result)
         }
     }
 }

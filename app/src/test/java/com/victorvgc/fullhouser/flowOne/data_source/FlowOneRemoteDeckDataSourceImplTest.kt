@@ -9,7 +9,7 @@ import com.victorvgc.fullhouser.core.model.Deck
 import com.victorvgc.fullhouser.core.model.Response
 import com.victorvgc.fullhouser.core.utils.toParamString
 import com.victorvgc.fullhouser.flowOne.failure.APIFailure
-import com.victorvgc.fullhouser.flowOne.service.DeckService
+import com.victorvgc.fullhouser.flowOne.service.FlowOneDeckService
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
@@ -21,7 +21,7 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class RemoteDeckDataSourceImplTest {
+class FlowOneRemoteDeckDataSourceImplTest {
     @get:Rule
     val testInstantTaskExecutorRule = InstantTaskExecutorRule()
 
@@ -29,10 +29,10 @@ class RemoteDeckDataSourceImplTest {
     val testCoroutineRule = CoroutineRule()
 
     // SUT
-    private lateinit var sut: RemoteDeckDataSourceImpl
+    private lateinit var sut: FlowOneRemoteDeckDataSourceImpl
 
     // MOCKS
-    private val mockDeckService = mock(DeckService::class.java)
+    private val mockDeckService = mock(FlowOneDeckService::class.java)
 
     // USEFUL VARIABLES
     private val testDeckId = "deckID00001"
@@ -56,6 +56,10 @@ class RemoteDeckDataSourceImplTest {
         `when`(mockDeckService.createDeckPile(anyString(), anyString())).thenAnswer {
             testResponse
         }
+
+        `when`(mockDeckService.createRotPile(anyString(), anyString())).thenAnswer {
+            testResponse
+        }
     }
 
     private suspend fun setupFailureRequest() {
@@ -66,11 +70,15 @@ class RemoteDeckDataSourceImplTest {
         `when`(mockDeckService.createDeckPile(anyString(), anyString())).thenAnswer {
             testFailureResponse
         }
+
+        `when`(mockDeckService.createRotPile(anyString(), anyString())).thenAnswer {
+            testFailureResponse
+        }
     }
 
     @Before
     fun setup() {
-        sut = RemoteDeckDataSourceImpl(mockDeckService)
+        sut = FlowOneRemoteDeckDataSourceImpl(mockDeckService)
     }
 
     @Test
@@ -118,7 +126,7 @@ class RemoteDeckDataSourceImplTest {
     }
 
     @Test
-    fun `when savePile called send cards in deck as a pile`() {
+    fun `when saveDeckPile called send deck id, and cards in deck as a pile`() {
         testCoroutineRule.runBlockingTest {
             // arrange
             setupSuccessfulRequest()
@@ -128,14 +136,14 @@ class RemoteDeckDataSourceImplTest {
 
             // assert
             verify(mockDeckService, times(1)).createDeckPile(
-                testDeck.toString(),
+                testDeck.id,
                 testDeck.cards.toParamString()
             )
         }
     }
 
     @Test
-    fun `when savePile called success return a deck with deckId from Response Right Side`() {
+    fun `when saveDeckPile called success return a deck with deckId from Response Right Side`() {
         testCoroutineRule.runBlockingTest {
             // arrange
             setupSuccessfulRequest()
@@ -150,13 +158,60 @@ class RemoteDeckDataSourceImplTest {
     }
 
     @Test
-    fun `when savePile called and receives an API failure return APIFailure`() {
+    fun `when saveDeckPile called and receives an API failure return APIFailure`() {
         testCoroutineRule.runBlockingTest {
             // arrange
             setupFailureRequest()
 
             // act
             val result = sut.savePile(testDeck)
+
+            // assert
+            val expected = Left(APIFailure())
+            assertEquals(expected, result)
+        }
+    }
+
+    @Test
+    fun `when saveRotPile called send rotation card to a deck pile`() {
+        testCoroutineRule.runBlockingTest {
+            // arrange
+            setupSuccessfulRequest()
+
+            // act
+            sut.saveRotCard(testDeck)
+
+            // assert
+            verify(mockDeckService, times(1)).createRotPile(
+                testDeck.id,
+                testDeck.rotCard.toString()
+            )
+        }
+    }
+
+    @Test
+    fun `when saveRotPile called success return a deck with deckId from Response Right Side`() {
+        testCoroutineRule.runBlockingTest {
+            // arrange
+            setupSuccessfulRequest()
+
+            // act
+            val result = sut.saveRotCard(testDeck)
+
+            // assert
+            val expected = Right(testDeck)
+            assertEquals(expected, result)
+        }
+    }
+
+    @Test
+    fun `when saveRotPile called and receives an API failure return APIFailure`() {
+        testCoroutineRule.runBlockingTest {
+            // arrange
+            setupFailureRequest()
+
+            // act
+            val result = sut.saveRotCard(testDeck)
 
             // assert
             val expected = Left(APIFailure())

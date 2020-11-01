@@ -5,6 +5,6 @@ import com.victorvgc.fullhouser.core.model.Deck
 import com.victorvgc.fullhouser.core.utils.Failure
 import com.victorvgc.fullhouser.flowOne.model.Success
 
-interface DeckRepository {
+interface FlowOneDeckRepository {
     suspend fun saveDeck(deck: Deck?): Either<Failure, Success>
 }

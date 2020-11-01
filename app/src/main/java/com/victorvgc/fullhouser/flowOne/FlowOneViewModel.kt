@@ -8,10 +8,10 @@ import androidx.lifecycle.viewModelScope
 import com.victorvgc.fullhouser.core.model.Card
 import com.victorvgc.fullhouser.core.model.Deck
 import com.victorvgc.fullhouser.flowOne.model.*
-import com.victorvgc.fullhouser.flowOne.repository.DeckRepository
+import com.victorvgc.fullhouser.flowOne.repository.FlowOneDeckRepository
 import kotlinx.coroutines.launch
 
-class FlowOneViewModel(private val repository: DeckRepository): ViewModel() {
+class FlowOneViewModel(private val repository: FlowOneDeckRepository) : ViewModel() {
     val form = Form()
 
     val onFocusChangedListener = View.OnFocusChangeListener { _, focus ->

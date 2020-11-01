@@ -1,7 +1,6 @@
 package com.victorvgc.fullhouser.core.di
 
 import com.victorvgc.fullhouser.core.constants.NetworkConstants.Companion.BASE_URL
-import com.victorvgc.fullhouser.flowOne.service.DeckService
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
 import retrofit2.Retrofit

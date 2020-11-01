@@ -16,7 +16,7 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class LocalDeckDataSourceImplTest {
+class FlowOneLocalDeckDataSourceImplTest {
     @get:Rule
     val testInstantTaskExecutorRule = InstantTaskExecutorRule()
 
@@ -24,7 +24,7 @@ class LocalDeckDataSourceImplTest {
     val testCoroutineRule = CoroutineRule()
 
     // SUT
-    private lateinit var sut: LocalDeckDataSourceImpl
+    private lateinit var sut: FlowOneLocalDeckDataSourceImpl
 
     // MOCKS
     private val mockSharedPreferences = mock(SharedPreferences::class.java)
@@ -50,7 +50,7 @@ class LocalDeckDataSourceImplTest {
 
     @Before
     fun setup() {
-        sut = LocalDeckDataSourceImpl(mockSharedPreferences)
+        sut = FlowOneLocalDeckDataSourceImpl(mockSharedPreferences)
     }
 
     @Test
@@ -68,27 +68,6 @@ class LocalDeckDataSourceImplTest {
                 .putString(
             SharedPreferencesConstants.deckId,
             testDeckId
-                )
-
-            verify(mockSharedPreferencesEditor, times(1)).apply()
-        }
-    }
-
-    @Test
-    fun `when saveDeck called put rotationCard on SharedPreferences`() {
-        testCoroutineRule.runBlockingTest {
-            // arrange
-            setupPreferences()
-
-            // act
-            sut.saveDeck(testDeck)
-
-            // assert
-            verify(mockSharedPreferences, times(1)).edit()
-            verify(mockSharedPreferencesEditor, times(1))
-                .putString(
-                    SharedPreferencesConstants.rotCard,
-                    testRotCard.toString()
                 )
 
             verify(mockSharedPreferencesEditor, times(1)).apply()
