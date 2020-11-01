@@ -2,8 +2,6 @@ package com.victorvgc.fullhouser.flowOne.model
 
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.victorvgc.fullhouser.BR
 import com.victorvgc.fullhouser.R
 import java.util.*
@@ -12,8 +10,6 @@ class Form : BaseObservable() {
     val cardFields = CardFields()
 
     var error = 0
-
-    private val buttonCLick = MutableLiveData<CardFields>()
 
     val cards = mutableListOf<String>()
     var rotCard = ""
@@ -107,16 +103,6 @@ class Form : BaseObservable() {
         notifyPropertyChanged(BR.valid)
 
         return true
-    }
-
-    fun onClick() {
-        if (isValid()) {
-            buttonCLick.value = cardFields
-        }
-    }
-
-    fun getCardFields(): LiveData<CardFields> {
-        return buttonCLick
     }
 
     @Bindable

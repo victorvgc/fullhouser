@@ -1,9 +1,9 @@
 package com.victorvgc.fullhouser.flowOne.di
 
-import com.victorvgc.fullhouser.flowOne.repository.DeckRepository
-import com.victorvgc.fullhouser.flowOne.repository.DeckRepositoryImpl
+import com.victorvgc.fullhouser.flowOne.repository.FlowOneDeckRepository
+import com.victorvgc.fullhouser.flowOne.repository.FlowOneDeckRepositoryImpl
 import org.koin.dsl.module
 
 val flowOneRepositoryModule = module {
-    single<DeckRepository> { DeckRepositoryImpl(get(), get()) }
+    single<FlowOneDeckRepository> { FlowOneDeckRepositoryImpl(get(), get()) }
 }

@@ -11,7 +11,7 @@ import com.victorvgc.fullhouser.flowOne.failure.SomethingWentWrongFailure
 import com.victorvgc.fullhouser.flowOne.model.Error
 import com.victorvgc.fullhouser.flowOne.model.State
 import com.victorvgc.fullhouser.flowOne.model.Success
-import com.victorvgc.fullhouser.flowOne.repository.DeckRepository
+import com.victorvgc.fullhouser.flowOne.repository.FlowOneDeckRepository
 import com.victorvgc.fullhouser.getOrAwaitValue
 import io.mockk.MockKAnnotations
 import junit.framework.Assert.assertEquals
@@ -38,7 +38,7 @@ class FlowOneViewModelTest {
     private lateinit var sut: FlowOneViewModel
 
     // MOCKS
-    private val mockDeckRepository = mock(DeckRepository::class.java)
+    private val mockDeckRepository = mock(FlowOneDeckRepository::class.java)
 
     @Mock
     private lateinit var mockObserver: Observer<State>
