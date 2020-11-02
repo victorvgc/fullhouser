@@ -2,10 +2,10 @@ package com.victorvgc.fullhouser
 
 import android.app.Application
 import com.victorvgc.fullhouser.core.di.coreNetworkModule
-import com.victorvgc.fullhouser.flowOne.di.flowOneDataSourceModule
-import com.victorvgc.fullhouser.flowOne.di.flowOneNetworkModule
-import com.victorvgc.fullhouser.flowOne.di.flowOneRepositoryModule
-import com.victorvgc.fullhouser.flowOne.di.viewModelModule
+import com.victorvgc.fullhouser.flow_one.di.flowOneDataSourceModule
+import com.victorvgc.fullhouser.flow_one.di.flowOneNetworkModule
+import com.victorvgc.fullhouser.flow_one.di.flowOneRepositoryModule
+import com.victorvgc.fullhouser.flow_one.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
