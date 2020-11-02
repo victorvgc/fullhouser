@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import arrow.core.Left
 import arrow.core.Right
 import com.victorvgc.fullhouser.CoroutineRule
+import com.victorvgc.fullhouser.core.constants.NetworkConstants
 import com.victorvgc.fullhouser.core.model.*
 import com.victorvgc.fullhouser.core.utils.APIFailure
 import com.victorvgc.fullhouser.flow_two.service.FlowTwoDeckService
@@ -13,7 +14,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito
 import org.mockito.Mockito.*
 import org.mockito.junit.MockitoJUnitRunner
 
@@ -30,7 +30,7 @@ class FlowTwoRemoteDeckDataSourceImplTest {
     private lateinit var sut: FlowTwoRemoteDeckDataSourceImpl
 
     // MOCKS
-    private val mockDeckService = Mockito.mock(FlowTwoDeckService::class.java)
+    private val mockDeckService = mock(FlowTwoDeckService::class.java)
 
     // USEFUL VARIABLES
     private val testDeckId = "deckID00001"
@@ -51,27 +51,35 @@ class FlowTwoRemoteDeckDataSourceImplTest {
     private val testRemoteRotCard = listOf(
         RemoteCard("img", "value", "suit", "2H")
     )
-    private val testPlayerHandPile = listOf(
-        Pile(
-            testRemoteCardList.size,
-            testRemoteCardList
-        )
+    private val testPlayerHandPile = Pile(
+        testRemoteCardList.size,
+        testRemoteCardList
     )
 
-    private val testRotCardPile = listOf(
-        Pile(
-            testRemoteRotCard.size,
-            testRemoteRotCard
-        )
+    private val testRotCardPile = Pile(
+        testRemoteRotCard.size,
+        testRemoteRotCard
     )
 
     private val testDeck = Deck(testDeckId, testPlayerHandList, testRotCard)
     private val testPlayerHandResponse =
-        Response(true, testDeckId, true, testPlayerHandList.size, testPlayerHandPile)
+        Response(
+            true,
+            testDeckId,
+            true,
+            testPlayerHandList.size,
+            mapOf(NetworkConstants.PLAYER_HAND to testPlayerHandPile)
+        )
     private val testRotCardResponse =
-        Response(true, testDeckId, true, testPlayerHandList.size, testRotCardPile)
+        Response(
+            true,
+            testDeckId,
+            true,
+            testPlayerHandList.size,
+            mapOf(NetworkConstants.ROT_CARD to testRotCardPile)
+        )
     private val testFailureResponse =
-        Response(false, testDeckId, true, testPlayerHandList.size, emptyList())
+        Response(false, testDeckId, true, testPlayerHandList.size, emptyMap())
 
     // USEFUL METHODS
     private suspend fun setupSuccessfulPlayerHandResponse() {

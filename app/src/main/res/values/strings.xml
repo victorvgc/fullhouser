@@ -12,4 +12,9 @@
 
     <string name="error_something_went_wrong">Ops! Something went wrong :(</string>
     <string name="error_something_went_really_wrong">Sorry, this never happened before T.T</string>
+
+    <string name="highest_value">Highest Value: </string>
+    <string name="full_house_combinations">Full House Combinations: </string>
+
+    <string name="no_combinations_msg">There are no combinations</string>
 </resources>

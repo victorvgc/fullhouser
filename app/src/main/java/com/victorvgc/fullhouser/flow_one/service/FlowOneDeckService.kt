@@ -8,18 +8,21 @@ import retrofit2.http.Query
 
 interface FlowOneDeckService {
 
-    @GET("new/shuffle")
+    @GET("new/shuffle/")
     suspend fun saveDeck(@Query(NetworkConstants.PARAM_CARDS) cards: String): Response
 
-    @GET(NetworkConstants.PLAYER_HAND_URL + "add")
+    @GET(NetworkConstants.DRAW_CARDS)
+    suspend fun drawCards(@Query(NetworkConstants.CARD_COUNT) cardCount: Int)
+
+    @GET("${NetworkConstants.PLAYER_HAND_URL}add/")
     suspend fun createDeckPile(
         @Path(NetworkConstants.PARAM_DECK_ID) deckId: String,
-        @Query(NetworkConstants.PARAM_CARDS) cards: String
+        @Query(NetworkConstants.PARAM_CARDS, encoded = true) cards: String
     ): Response
 
-    @GET(NetworkConstants.ROT_CARD_URL + "add")
+    @GET("${NetworkConstants.ROT_CARD_URL}add/")
     suspend fun createRotPile(
         @Path(NetworkConstants.PARAM_DECK_ID) deckId: String,
-        @Query(NetworkConstants.PARAM_CARDS) rotCard: String
+        @Query(NetworkConstants.PARAM_CARDS, encoded = true) rotCard: String
     ): Response
 }

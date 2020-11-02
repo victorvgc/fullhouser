@@ -1,5 +1,6 @@
 package com.victorvgc.fullhouser.flow_one.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -9,6 +10,7 @@ import com.victorvgc.fullhouser.databinding.ActivityFlowOneBinding
 import com.victorvgc.fullhouser.flow_one.FlowOneViewModel
 import com.victorvgc.fullhouser.flow_one.model.Loading
 import com.victorvgc.fullhouser.flow_one.model.Success
+import com.victorvgc.fullhouser.flow_two.ui.FlowTwoActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class FlowOneActivity : BaseActivity() {
@@ -32,14 +34,7 @@ class FlowOneActivity : BaseActivity() {
                     binding.pbSubmit.visibility = View.VISIBLE
                 }
                 is Success -> {
-                    /*Intent().let {
-                        startActivity(it)
-                    }*/
-                    Toast.makeText(
-                        this,
-                        "TODO: Call Flow 2",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    startActivity(Intent(this, FlowTwoActivity::class.java))
                 }
                 is Error -> {
                     Toast.makeText(

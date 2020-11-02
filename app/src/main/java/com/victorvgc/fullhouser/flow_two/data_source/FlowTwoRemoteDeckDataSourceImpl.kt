@@ -3,7 +3,9 @@ package com.victorvgc.fullhouser.flow_two.data_source
 import arrow.core.Either
 import arrow.core.Left
 import arrow.core.Right
+import com.victorvgc.fullhouser.core.constants.NetworkConstants
 import com.victorvgc.fullhouser.core.model.Card
+import com.victorvgc.fullhouser.core.model.Pile
 import com.victorvgc.fullhouser.core.utils.APIFailure
 import com.victorvgc.fullhouser.core.utils.Failure
 import com.victorvgc.fullhouser.flow_two.service.FlowTwoDeckService
@@ -16,15 +18,17 @@ class FlowTwoRemoteDeckDataSourceImpl(private val deckService: FlowTwoDeckServic
         if (response.success) {
             val cardList = mutableListOf<Card>()
 
-            for (pile in response.piles) {
-                if (!pile.cards.isNullOrEmpty()) {
-                    for (remoteCards in pile.cards) {
-                        cardList.add(Card.fromString(remoteCards.code))
-                    }
+            val pile = response.piles[NetworkConstants.PLAYER_HAND] ?: Pile(0, emptyList())
+            if (!pile.cards.isNullOrEmpty()) {
+                for (remoteCards in pile.cards) {
+                    cardList.add(Card.fromString(remoteCards.code))
                 }
             }
 
-            return Right(cardList)
+            return if (cardList.isNotEmpty())
+                Right(cardList)
+            else
+                Left(APIFailure())
         }
 
         return Left(APIFailure())
@@ -36,15 +40,18 @@ class FlowTwoRemoteDeckDataSourceImpl(private val deckService: FlowTwoDeckServic
         if (response.success) {
             val cardList = mutableListOf<Card>()
 
-            for (pile in response.piles) {
-                if (!pile.cards.isNullOrEmpty()) {
-                    for (remoteCards in pile.cards) {
-                        cardList.add(Card.fromString(remoteCards.code))
-                    }
+            val pile = response.piles[NetworkConstants.ROT_CARD] ?: Pile(0, emptyList())
+
+            if (!pile.cards.isNullOrEmpty()) {
+                for (remoteCards in pile.cards) {
+                    cardList.add(Card.fromString(remoteCards.code))
                 }
             }
 
-            return Right(cardList[0])
+            return if (cardList.isNotEmpty())
+                Right(cardList[0])
+            else
+                Left(APIFailure())
         }
 
         return Left(APIFailure())

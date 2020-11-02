@@ -2,20 +2,8 @@ package com.victorvgc.fullhouser.flow_one
 
 import android.view.View
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.bumptech.glide.Glide
-import com.victorvgc.fullhouser.core.constants.NetworkConstants
-
-@BindingAdapter("loadCard")
-fun bindCardImage(view: ImageView, url: String?) {
-    url.let {
-        Glide.with(view)
-            .load(NetworkConstants.BASE_CARD_URL + it)
-            .into(view)
-    }
-}
 
 @BindingAdapter("error")
 fun setError(view: TextView, msgId: Int) {

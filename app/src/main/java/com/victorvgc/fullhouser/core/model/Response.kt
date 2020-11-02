@@ -11,5 +11,5 @@ data class Response(
     val deckId: String,
     val shuffled: Boolean,
     val remaining: Int,
-    val piles: List<Pile>
+    val piles: Map<String, Pile>
 ): Parcelable

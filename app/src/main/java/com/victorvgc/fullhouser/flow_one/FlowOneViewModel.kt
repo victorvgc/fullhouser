@@ -7,7 +7,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.victorvgc.fullhouser.core.model.Card
 import com.victorvgc.fullhouser.core.model.Deck
-import com.victorvgc.fullhouser.flow_one.model.*
+import com.victorvgc.fullhouser.core.model.State
+import com.victorvgc.fullhouser.flow_one.model.Error
+import com.victorvgc.fullhouser.flow_one.model.Form
+import com.victorvgc.fullhouser.flow_one.model.Loading
+import com.victorvgc.fullhouser.flow_one.model.Success
 import com.victorvgc.fullhouser.flow_one.repository.FlowOneDeckRepository
 import kotlinx.coroutines.launch
 

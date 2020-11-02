@@ -29,7 +29,7 @@ class Deck(
 
     override fun toString(): String {
         var str = cards.toParamString()
-        str += "$rotCard"
+        str += ",$rotCard"
 
         return str
     }

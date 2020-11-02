@@ -44,9 +44,9 @@ class FlowOneRemoteDeckDataSourceImplTest {
         Card("D", "A")
     )
     private val testDeck = Deck("testDeckId", testCardsList, testRotCard)
-    private val testResponse = Response(true, testDeckId, true, testCardsList.size, emptyList())
+    private val testResponse = Response(true, testDeckId, true, testCardsList.size, emptyMap())
     private val testFailureResponse =
-        Response(false, testDeckId, true, testCardsList.size, emptyList())
+        Response(false, testDeckId, true, testCardsList.size, emptyMap())
 
     // USEFUL METHODS
     private suspend fun setupSuccessfulRequest() {

@@ -7,9 +7,9 @@ import arrow.core.Right
 import com.victorvgc.fullhouser.CoroutineRule
 import com.victorvgc.fullhouser.core.model.Card
 import com.victorvgc.fullhouser.core.model.Deck
+import com.victorvgc.fullhouser.core.model.State
 import com.victorvgc.fullhouser.core.utils.SomethingWentWrongFailure
 import com.victorvgc.fullhouser.flow_one.model.Error
-import com.victorvgc.fullhouser.flow_one.model.State
 import com.victorvgc.fullhouser.flow_one.model.Success
 import com.victorvgc.fullhouser.flow_one.repository.FlowOneDeckRepository
 import com.victorvgc.fullhouser.getOrAwaitValue
