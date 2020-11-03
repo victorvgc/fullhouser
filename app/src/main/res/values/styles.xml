@@ -20,13 +20,18 @@
     <style name="ProgressBarSubmit" parent="Widget.AppCompat.ProgressBar">
         <item name="android:indeterminateTint">@color/white</item>
         <item name="android:padding">8dp</item>
-        <item name="android:background">@color/teal_200</item>
+        <item name="android:background">@color/green_700</item>
         <item name="android:indeterminate">true</item>
     </style>
 
     <style name="DefaultTitleText" parent="Widget.AppCompat.TextView">
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="CardInput" parent="Widget.AppCompat.EditText">
+        <item name="android:hint">@string/card_hint</item>
         <item name="android:textSize">18sp</item>
     </style>
 </resources>

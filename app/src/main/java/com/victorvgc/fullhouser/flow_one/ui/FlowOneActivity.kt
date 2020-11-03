@@ -29,9 +29,11 @@ class FlowOneActivity : BaseActivity() {
 
         viewModel.getState().observe(this) {
             binding.pbSubmit.visibility = View.GONE
+            binding.btnSubmit.isClickable = true
             when (it) {
                 is Loading -> {
                     binding.pbSubmit.visibility = View.VISIBLE
+                    binding.btnSubmit.isClickable = false
                 }
                 is Success -> {
                     startActivity(Intent(this, FlowTwoActivity::class.java))

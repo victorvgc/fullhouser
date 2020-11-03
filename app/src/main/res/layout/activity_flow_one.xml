@@ -16,7 +16,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/gray_100">
 
         <TextView
             android:id="@+id/tv_error"
@@ -39,6 +40,7 @@
             android:importantForAutofill="no"
             android:inputType="textPersonName"
             android:text="@={viewModel.form.cardFields.rotCard}"
+            android:textAlignment="center"
             android:textAllCaps="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -89,6 +91,7 @@
                     android:importantForAutofill="no"
                     android:inputType="textPersonName"
                     android:text="@={viewModel.form.cardFields.card0}"
+                    android:textAlignment="center"
                     android:textAllCaps="true"
                     bind:onFocus="@{viewModel.onFocusChangedListener}" />
 
@@ -101,6 +104,7 @@
                     android:importantForAutofill="no"
                     android:inputType="textPersonName"
                     android:text="@={viewModel.form.cardFields.card1}"
+                    android:textAlignment="center"
                     android:textAllCaps="true"
                     bind:onFocus="@{viewModel.onFocusChangedListener}" />
             </LinearLayout>
@@ -121,6 +125,7 @@
                     android:importantForAutofill="no"
                     android:inputType="textPersonName"
                     android:text="@={viewModel.form.cardFields.card2}"
+                    android:textAlignment="center"
                     android:textAllCaps="true" />
 
                 <EditText
@@ -132,6 +137,7 @@
                     android:importantForAutofill="no"
                     android:inputType="textPersonName"
                     android:text="@={viewModel.form.cardFields.card3}"
+                    android:textAlignment="center"
                     android:textAllCaps="true" />
             </LinearLayout>
 
@@ -151,6 +157,7 @@
                     android:importantForAutofill="no"
                     android:inputType="textPersonName"
                     android:text="@={viewModel.form.cardFields.card4}"
+                    android:textAlignment="center"
                     android:textAllCaps="true" />
 
                 <EditText
@@ -162,6 +169,7 @@
                     android:importantForAutofill="no"
                     android:inputType="textPersonName"
                     android:text="@={viewModel.form.cardFields.card5}"
+                    android:textAlignment="center"
                     android:textAllCaps="true" />
             </LinearLayout>
 
@@ -181,6 +189,7 @@
                     android:importantForAutofill="no"
                     android:inputType="textPersonName"
                     android:text="@={viewModel.form.cardFields.card6}"
+                    android:textAlignment="center"
                     android:textAllCaps="true" />
 
                 <EditText
@@ -192,6 +201,7 @@
                     android:importantForAutofill="no"
                     android:inputType="textPersonName"
                     android:text="@={viewModel.form.cardFields.card7}"
+                    android:textAlignment="center"
                     android:textAllCaps="true" />
             </LinearLayout>
 
@@ -211,6 +221,7 @@
                     android:importantForAutofill="no"
                     android:inputType="textPersonName"
                     android:text="@={viewModel.form.cardFields.card8}"
+                    android:textAlignment="center"
                     android:textAllCaps="true" />
 
                 <EditText
@@ -222,6 +233,7 @@
                     android:importantForAutofill="no"
                     android:inputType="textPersonName"
                     android:text="@={viewModel.form.cardFields.card9}"
+                    android:textAlignment="center"
                     android:textAllCaps="true" />
             </LinearLayout>
         </LinearLayout>
