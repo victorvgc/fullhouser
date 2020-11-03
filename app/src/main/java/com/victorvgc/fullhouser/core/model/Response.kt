@@ -5,10 +5,11 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Response (
+data class Response(
     val success: Boolean,
     @SerializedName("deck_id")
     val deckId: String,
     val shuffled: Boolean,
-    val remaining: Int
+    val remaining: Int,
+    val piles: Map<String, Pile>
 ): Parcelable

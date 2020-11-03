@@ -5,8 +5,12 @@ import com.victorvgc.fullhouser.core.model.Card
 fun List<Card>.toParamString(): String {
     var string = ""
 
-    for (card in this) {
-        string += "$card,"
+    for (cardIndex in this.indices) {
+        val card = this[cardIndex]
+        string += "$card"
+
+        if (cardIndex < this.size - 1)
+            string += ","
     }
 
     return string

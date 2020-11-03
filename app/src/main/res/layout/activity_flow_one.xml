@@ -7,9 +7,9 @@
 
         <variable
             name="viewModel"
-            type="com.victorvgc.fullhouser.flowOne.FlowOneViewModel" />
+            type="com.victorvgc.fullhouser.flow_one.FlowOneViewModel" />
 
-        <import type="com.victorvgc.fullhouser.flowOne.model.Loading" />
+        <import type="com.victorvgc.fullhouser.flow_one.model.Loading" />
 
         <import type="android.view.View" />
     </data>
