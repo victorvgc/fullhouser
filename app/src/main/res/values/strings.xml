@@ -18,4 +18,6 @@
 
     <string name="no_combinations_msg">There are no combinations</string>
     <string name="here_is_the_order">Here is the order: </string>
+
+    <string name="create_deck">Create an awesome Deck!</string>
 </resources>

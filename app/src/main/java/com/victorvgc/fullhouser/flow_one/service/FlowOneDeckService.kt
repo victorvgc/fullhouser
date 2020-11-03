@@ -9,7 +9,12 @@ import retrofit2.http.Query
 interface FlowOneDeckService {
 
     @GET("new/shuffle/")
-    suspend fun saveDeck(@Query(NetworkConstants.PARAM_CARDS) cards: String): Response
+    suspend fun saveDeck(
+        @Query(
+            NetworkConstants.PARAM_CARDS,
+            encoded = true
+        ) cards: String
+    ): Response
 
     @GET(NetworkConstants.DRAW_CARDS)
     suspend fun drawCards(
