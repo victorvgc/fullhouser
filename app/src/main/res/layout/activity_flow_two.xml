@@ -128,6 +128,7 @@
                 android:layout_marginTop="16dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:padding="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -145,8 +146,8 @@
                     android:layout_width="@dimen/card_width"
                     android:layout_height="@dimen/card_height"
                     android:layout_margin="4dp"
-                    android:elevation="12dp"
-                    app:cardCornerRadius="3dp">
+                    app:cardCornerRadius="3dp"
+                    app:cardElevation="8dp">
 
                     <ImageView
                         android:id="@+id/iv_card"

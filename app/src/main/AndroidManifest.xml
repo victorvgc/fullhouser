@@ -12,8 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FullHouser">
-        <activity android:name=".flow_two.ui.FlowTwoActivity"></activity>
-        <activity android:name=".flow_one.ui.FlowOneActivity">
+        <activity android:name=".flow_two.ui.FlowTwoActivity" />
+        <activity
+            android:name=".flow_one.ui.FlowOneActivity"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
