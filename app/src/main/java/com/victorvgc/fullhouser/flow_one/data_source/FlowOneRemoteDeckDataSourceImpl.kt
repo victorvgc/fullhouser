@@ -37,4 +37,13 @@ class FlowOneRemoteDeckDataSourceImpl(private val flowOneDeckService: FlowOneDec
         else
             Left(APIFailure())
     }
+
+    override suspend fun drawAllCards(deck: Deck?): Either<Failure, Deck> {
+        val response = flowOneDeckService.drawCards(deck!!.id, deck.cards.size + 1)
+
+        return if (response.success)
+            Right(deck)
+        else
+            Left(APIFailure())
+    }
 }

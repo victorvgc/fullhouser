@@ -61,6 +61,10 @@ class FlowOneDeckRepositoryImplTest {
         `when`(mockRemoteDeckDataSource.saveRotCard(any(Deck::class.java))).thenAnswer {
             Right(testFinalDeck)
         }
+
+        `when`(mockRemoteDeckDataSource.drawAllCards(any(Deck::class.java))).thenAnswer {
+            Right(testFinalDeck)
+        }
     }
 
     @Before
@@ -114,6 +118,10 @@ class FlowOneDeckRepositoryImplTest {
                 Right(testFinalDeck)
             }
 
+            `when`(mockRemoteDeckDataSource.drawAllCards(any(Deck::class.java))).thenAnswer {
+                Right(testFinalDeck)
+            }
+
             `when`(mockRemoteDeckDataSource.savePile(any(Deck::class.java))).thenAnswer {
                 Left(Failure("Any failure"))
             }
@@ -164,6 +172,10 @@ class FlowOneDeckRepositoryImplTest {
                 Right(testFinalDeck)
             }
 
+            `when`(mockRemoteDeckDataSource.drawAllCards(any(Deck::class.java))).thenAnswer {
+                Right(testFinalDeck)
+            }
+
             `when`(mockRemoteDeckDataSource.savePile(any(Deck::class.java))).thenAnswer {
                 Right(testFinalDeck)
             }
@@ -179,6 +191,24 @@ class FlowOneDeckRepositoryImplTest {
             val expected = Left(SomethingWentWrongFailure())
 
             assertEquals(expected, result)
+        }
+    }
+
+    @Test
+    fun `when saveDeck called then draw all cards before saving any pile`() {
+        testCoroutineRule.runBlockingTest {
+            // arrange
+            setupSuccessfulDataSource()
+
+            // act
+            sut.saveDeck(testStartDeck)
+
+            // assert
+            val order = inOrder(mockRemoteDeckDataSource)
+            order.verify(mockRemoteDeckDataSource, times(1)).saveDeck(testStartDeck)
+            order.verify(mockRemoteDeckDataSource, times(1)).drawAllCards(testFinalDeck)
+            order.verify(mockRemoteDeckDataSource, times(1)).savePile(testFinalDeck)
+            order.verify(mockRemoteDeckDataSource, times(1)).saveRotCard(testFinalDeck)
         }
     }
 }

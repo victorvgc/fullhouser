@@ -12,7 +12,10 @@ interface FlowOneDeckService {
     suspend fun saveDeck(@Query(NetworkConstants.PARAM_CARDS) cards: String): Response
 
     @GET(NetworkConstants.DRAW_CARDS)
-    suspend fun drawCards(@Query(NetworkConstants.CARD_COUNT) cardCount: Int)
+    suspend fun drawCards(
+        @Path(NetworkConstants.PARAM_DECK_ID) deckId: String,
+        @Query(NetworkConstants.CARD_COUNT) cardCount: Int
+    ): Response
 
     @GET("${NetworkConstants.PLAYER_HAND_URL}add/")
     suspend fun createDeckPile(

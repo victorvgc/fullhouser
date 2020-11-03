@@ -10,5 +10,7 @@ interface FlowOneRemoteDeckDataSource {
     suspend fun savePile(deck: Deck?): Either<Failure, Deck>
 
     suspend fun saveRotCard(deck: Deck?): Either<Failure, Deck>
+
+    suspend fun drawAllCards(deck: Deck?): Either<Failure, Deck>
 }
 

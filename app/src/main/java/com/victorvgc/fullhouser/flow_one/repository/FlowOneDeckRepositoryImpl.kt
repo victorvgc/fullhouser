@@ -20,22 +20,28 @@ class FlowOneDeckRepositoryImpl(
         return resDeck.fold(
             { Left(SomethingWentWrongFailure()) },
             { remoteDeck ->
-                val resDeckPile = remoteDeckDataSource.savePile(remoteDeck)
+                val drawAllCards = remoteDeckDataSource.drawAllCards(remoteDeck)
 
-                resDeckPile.fold(
-                    { Left(SomethingWentWrongFailure()) },
-                    { remotePile ->
-                        val resRotPile = remoteDeckDataSource.saveRotCard(remotePile)
+                drawAllCards.fold({ Left(SomethingWentWrongFailure()) },
+                    { drawDeck ->
+                        val resDeckPile = remoteDeckDataSource.savePile(drawDeck)
 
-                        resRotPile.fold(
+                        resDeckPile.fold(
                             { Left(SomethingWentWrongFailure()) },
-                            { rotPile ->
-                                localDeckDataSource.saveDeck(rotPile)
-                                Right(Success())
+                            { remotePile ->
+                                val resRotPile = remoteDeckDataSource.saveRotCard(remotePile)
+
+                                resRotPile.fold(
+                                    { Left(SomethingWentWrongFailure()) },
+                                    { rotPile ->
+                                        localDeckDataSource.saveDeck(rotPile)
+                                        Right(Success())
+                                    }
+                                )
                             }
                         )
-                    }
-                )
+                    })
+
             }
         )
     }

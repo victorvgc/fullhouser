@@ -61,6 +61,10 @@ class FlowOneRemoteDeckDataSourceImplTest {
         `when`(mockDeckService.createRotPile(anyString(), anyString())).thenAnswer {
             testResponse
         }
+
+        `when`(mockDeckService.drawCards(anyString(), anyInt())).thenAnswer {
+            testResponse
+        }
     }
 
     private suspend fun setupFailureRequest() {
@@ -73,6 +77,10 @@ class FlowOneRemoteDeckDataSourceImplTest {
         }
 
         `when`(mockDeckService.createRotPile(anyString(), anyString())).thenAnswer {
+            testFailureResponse
+        }
+
+        `when`(mockDeckService.drawCards(anyString(), anyInt())).thenAnswer {
             testFailureResponse
         }
     }
@@ -213,6 +221,51 @@ class FlowOneRemoteDeckDataSourceImplTest {
 
             // act
             val result = sut.saveRotCard(testDeck)
+
+            // assert
+            val expected = Left(APIFailure())
+            assertEquals(expected, result)
+        }
+    }
+
+    @Test
+    fun `when drawAllCards send deck cards plus rot card sum to be draw`() {
+        testCoroutineRule.runBlockingTest {
+            // arrange
+            setupSuccessfulRequest()
+
+            // act
+            sut.drawAllCards(testDeck)
+
+            // assert
+            verify(mockDeckService, times(1))
+                .drawCards(testDeck.id, testDeck.cards.size + 1)
+        }
+    }
+
+    @Test
+    fun `when drawAllCards called success return a deck with deckId from Response Right Side`() {
+        testCoroutineRule.runBlockingTest {
+            // arrange
+            setupSuccessfulRequest()
+
+            // act
+            val result = sut.drawAllCards(testDeck)
+
+            // assert
+            val expected = Right(testDeck)
+            assertEquals(expected, result)
+        }
+    }
+
+    @Test
+    fun `when drawAllCards called and receives an API failure return APIFailure`() {
+        testCoroutineRule.runBlockingTest {
+            // arrange
+            setupFailureRequest()
+
+            // act
+            val result = sut.drawAllCards(testDeck)
 
             // assert
             val expected = Left(APIFailure())
