@@ -33,7 +33,6 @@ class FlowOneViewModel(private val repository: FlowOneDeckRepository) : ViewMode
             for (cardInput in form.cards) {
                 cards.add(Card.fromString(cardInput))
             }
-
             val rotCard = Card.fromString(form.rotCard)
 
             val deck = Deck("", cards, rotCard)
