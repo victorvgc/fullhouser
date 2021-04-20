@@ -11,6 +11,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/ScanWay/image_scanner" />
+            <option value="$PROJECT_DIR$/ScanWay/openCVLibrary3410" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>

@@ -1,2 +1,6 @@
+include ':image_scanner'
+include ':openCVLibrary3410'
 include ':app'
+project(':openCVLibrary3410').projectDir = new File(rootDir, 'ScanWay/openCVLibrary3410/')
+project(':image_scanner').projectDir = new File(rootDir, 'ScanWay/image_scanner/')
 rootProject.name = "FullHouser"

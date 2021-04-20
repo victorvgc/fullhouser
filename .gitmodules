@@ -1,0 +1,3 @@
+[submodule "ScanWay"]
+	path = ScanWay
+	url = https://github.com/victorvgc/ScanWay.git
