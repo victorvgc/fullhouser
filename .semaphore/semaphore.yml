@@ -15,5 +15,5 @@ blocks:
             - chmod +x gradlew
             - ./gradlew build
       env_vars:
-        - name: 'ANDROID_SDK_ROOT '
+        - name: ANDROID_SDK_ROOT
           value: /opt/android-sdk-linux
