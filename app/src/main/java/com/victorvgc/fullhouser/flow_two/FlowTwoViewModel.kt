@@ -18,14 +18,15 @@ class FlowTwoViewModel(private val repository: FlowTwoDeckRepository) : ViewMode
 
     val state = MutableLiveData<State>()
 
-    fun getDeck() {
+    fun start() {
         viewModelScope.launch {
             state.postValue(Loading())
             val remoteDeckOrFailure = repository.getDeck()
 
-            remoteDeckOrFailure.fold({
-                state.postValue(DeckNotFound())
-            },
+            remoteDeckOrFailure.fold(
+                {
+                    state.postValue(DeckNotFound())
+                },
                 { remoteDeck ->
                     val sortedDeck = sortDeck(remoteDeck)
                     deck.postValue(sortedDeck)

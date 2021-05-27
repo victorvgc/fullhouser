@@ -25,7 +25,7 @@ class FlowTwoActivity : BaseActivity() {
             viewModel = this@FlowTwoActivity.viewModel
         }
 
-        viewModel.getDeck()
+        viewModel.start()
 
         viewModel.state.observe(this) {
             binding.pbLoading.visibility = View.GONE
