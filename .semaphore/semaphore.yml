@@ -1,27 +1,33 @@
 version: v1.0
-name: First pipeline
+name: Android
 agent:
   machine:
     type: e1-standard-2
     os_image: ubuntu1804
   containers:
     - name: main
-      image: 'registry.semaphoreci.com/android:29-node'
+      image: semaphoreci/android:29
+global_job_config:
+  env_vars:
+    - name: ADB_INSTALL_TIMEOUT
+      value: "10"
+  prologue:
+    commands:
+      - checkout
+      - cache restore gradle-wrapper
+      - cache restore gradle-cache
+      - cache restore android-build
 blocks:
-  - name: bundle android
+  - name: Gradle
     task:
-      prologue:
-        commands:
-          - sem-version node 10.13.0
-          - npm install -g yarn
-          - checkout
-          - cache restore
-          - yarn
-          - cache store
       jobs:
-        - name: bundle-android
+        - name: 'Build Project'
           commands:
-            - yarn bundle-android
-      env_vars:
-        - name: ANDROID_SDK_ROOT
-          value: /opt/android-sdk-linux
+            - ./gradlew bundle
+        epilogue:
+          on_pass:
+            commands:
+              - cache clear
+              - cache store gradle-wrapper ~/.gradle/wrapper
+              - cache store gradle-cache ~/.gradle/caches
+              - cache store android-build ~/.android/build-cache
