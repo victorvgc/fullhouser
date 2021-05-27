@@ -23,4 +23,5 @@ blocks:
       jobs:
         - name: Build Project
           commands:
-            - chmod +x gradlew - ./gradlew bundle
+            - chmod +x gradlew
+            - ./gradlew bundle
