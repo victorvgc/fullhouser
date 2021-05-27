@@ -6,6 +6,7 @@ agent:
     containers:
       - name: main
         image: 'registry.semaphoreci.com/android:29'
+    os_image: ubuntu1804
 blocks:
   - name: Gradle
     task:
